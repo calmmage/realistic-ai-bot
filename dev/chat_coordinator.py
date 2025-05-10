@@ -1,9 +1,9 @@
 import asyncio
 from enum import Enum
-from typing import Optional, Dict, Any, Union
+from typing import Any, Dict, Optional, Union
 
-from pydantic import BaseModel
 from botspot.utils import get_scheduler
+from pydantic import BaseModel
 
 
 class ActivationType(Enum):

@@ -3,24 +3,24 @@ from pathlib import Path
 from aiogram import Bot, Dispatcher
 from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
-from calmlib.utils import setup_logger, heartbeat_for_sync
+from botspot.core.bot_manager import BotManager
+from calmlib.utils import setup_logger
 from dotenv import load_dotenv
 from loguru import logger
 
-from app._app import App
-from app.router import router as main_router
-from app.routers.settings import router as settings_router
-from botspot.core.bot_manager import BotManager
+from src.app import App
+from src.router import router as main_router
+from src.routers.settings import router as settings_router
 
 
-@heartbeat_for_sync(App.name)
+# @heartbeat_for_sync(App.name)
 def main(debug=False) -> None:
     setup_logger(logger, level="DEBUG" if debug else "INFO")
 
     # Initialize bot and dispatcher
     dp = Dispatcher()
-    dp.include_router(main_router)
     dp.include_router(settings_router)
+    dp.include_router(main_router)
 
     app = App()
     dp["app"] = app
@@ -34,9 +34,9 @@ def main(debug=False) -> None:
     # Initialize BotManager with default components
     bm = BotManager(
         bot=bot,
-        error_handler={"enabled": True},
-        ask_user={"enabled": True},
-        bot_commands_menu={"enabled": True},
+        # error_handler={"enabled": True},
+        # ask_user={"enabled": True},
+        # bot_commands_menu={"enabled": True},
     )
 
     # Setup dispatcher with our components
