@@ -78,6 +78,7 @@ async def set_model_handler(message: Message, app: App, state: FSMContext):
         question="Select a model",
         choices=choices,
         state=state,
+        columns=2,
     )
     if response is None:
         await send_safe(message.chat.id, "No model selected")
@@ -93,7 +94,7 @@ async def set_splitter_mode_handler(message: Message, app: App, state: FSMContex
 
     from botspot.user_interactions import ask_user_choice
 
-    from app import SplitterMode
+    from src.app import SplitterMode
 
     choices = [mode.value for mode in SplitterMode]
     response = await ask_user_choice(
@@ -116,7 +117,7 @@ async def set_delay_mode_handler(message: Message, app: App, state: FSMContext):
 
     from botspot.user_interactions import ask_user_choice
 
-    from app import DelayMode
+    from src.app import DelayMode
 
     choices = [mode.value for mode in DelayMode]
     response = await ask_user_choice(

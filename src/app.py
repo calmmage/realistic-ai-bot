@@ -10,6 +10,7 @@ from botspot.llm_provider import astream_llm
 from botspot.utils import answer_safe, reply_safe, typing_status
 from loguru import logger
 from pydantic_settings import BaseSettings
+from pydantic import SecretStr
 
 from src.utils import markdown_to_html
 
@@ -18,7 +19,7 @@ from src.utils import markdown_to_html
 
 class UserSettings(User):
     # todo: move from AppSettings and wire in
-    model: str = "claude-3.7"
+    model: str = "claude-3-5-haiku"
 
 
 class SplitterMode(Enum):
@@ -57,17 +58,43 @@ class ParallelMessageHandlingMode(Enum):
 
 
 supported_models = [
+    # "gpt-4o",
+    # "claude-3-5-haiku",
+    # "claude-3-5-sonnet",
+    # "claude-3-7",
+    # "grok-3",
+    # "gemini-2.5",
+    "claude-3.5-haiku",
+    "claude-3.5-sonnet",
+    "claude-3.7",
+    # OpenAI Models
+    # Cheap
+    "gpt-4o-mini",
+    # "o4-mini",
+    "gpt-4.1-nano",
+    # Mid
     "gpt-4o",
-    "claude-3-5-sonnet",
-    "claude-3-7",
+    # "gpt-4.1",
+    # Max
+    "o3",
+    # "gpt-4",
+    # "o1-pro",
+    # Google Models
+    "gemini-2.5-flash",
+    "gemini-2.5-pro",
+    # "gemini-2.5-exp",
+    # xAI Models
+    "grok-3-mini",
+    "grok-3",
 ]
 
 
 class AppConfig(BaseSettings):
     """Basic app configuration"""
 
-    telegram_bot_token: str
-    model: str = "claude-3.7"
+    telegram_bot_token: SecretStr
+    # model: str = "claude-3.7" # enable for attachments
+    model: str = "claude-3-5-haiku"  # for testing
     # model = Field(default="gpt-4o", choices=supported_models)
     # splitter_mode: SplitterMode = SplitterMode.NONE
     # splitter_mode: SplitterMode = SplitterMode.SIMPLE
