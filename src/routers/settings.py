@@ -3,7 +3,7 @@ from aiogram.filters import Command
 from aiogram.fsm.context import FSMContext
 from aiogram.types import Message
 from botspot import commands_menu
-from botspot.utils import send_safe
+from botspot.utils import send_safe, get_bot
 
 from src.app import App, supported_models
 
@@ -79,12 +79,36 @@ async def set_model_handler(message: Message, app: App, state: FSMContext):
         choices=choices,
         state=state,
         columns=2,
+        cleanup=True,
     )
     if response is None:
         await send_safe(message.chat.id, "No model selected")
         return
+
+    # Unpin previous model message if exists
+    state_data = await state.get_data()
+    pinned_model_msg_id = state_data.get("pinned_model_msg_id")
+    if pinned_model_msg_id:
+        try:
+            bot = get_bot()
+            await bot.unpin_chat_message(
+                chat_id=message.chat.id, message_id=pinned_model_msg_id
+            )
+        except Exception:
+            # Ignore errors if previous message cannot be unpinned
+            pass
+
     app.model = response
-    await send_safe(message.chat.id, f"Model set to {response}")
+
+    # Send and pin new model message
+    sent_msg = await send_safe(message.chat.id, f"🤖 Active model: {response}")
+    await sent_msg.pin(disable_notification=True)
+
+    # Save the message ID for future unpinning
+    # todo: save in mongodb instead
+    await state.update_data(pinned_model_msg_id=sent_msg.message_id)
+
+    await send_safe(message.chat.id, f"Model set to {response} and pinned in chat")
 
 
 @commands_menu.botspot_command("set_splitter_mode", "Set the splitter mode")
