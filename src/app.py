@@ -147,7 +147,7 @@ split_instructions = {
 
 
 class App:
-    name = "Mini Botspot Template"
+    name = "Realistic AI Bot"
 
     def __init__(self, **kwargs):
         self.config = AppConfig(**kwargs)

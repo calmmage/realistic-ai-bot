@@ -109,7 +109,9 @@ async def set_model_handler(message: Message, app: App, state: FSMContext):
     await state.update_data(pinned_model_msg_id=sent_msg.message_id)
 
 
-@commands_menu.botspot_command("set_splitter_mode", "Set the splitter mode")
+@commands_menu.botspot_command(
+    "set_splitter_mode", "Set the splitter mode", visibility="hidden"
+)
 @router.message(Command("set_splitter_mode"))
 async def set_splitter_mode_handler(message: Message, app: App, state: FSMContext):
     """Basic help command handler"""
@@ -132,7 +134,9 @@ async def set_splitter_mode_handler(message: Message, app: App, state: FSMContex
     await send_safe(message.chat.id, f"Splitter mode set to {response}")
 
 
-@commands_menu.botspot_command("set_delay_mode", "Set the delay mode")
+@commands_menu.botspot_command(
+    "set_delay_mode", "Set the delay mode", visibility="hidden"
+)
 @router.message(Command("set_delay_mode"))
 async def set_delay_mode_handler(message: Message, app: App, state: FSMContext):
     """Basic help command handler"""

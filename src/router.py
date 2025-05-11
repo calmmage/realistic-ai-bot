@@ -14,9 +14,16 @@ router = Router()
 async def start_handler(message: Message, app: App):
     await send_safe(
         message.chat.id,
-        f"Hello, {html.bold(message.from_user.full_name)}!\n"
-        f"Welcome to {app.name}!\n"
-        f"Use /help to see available commands.",
+        f"""
+        Hey, {html.bold(message.from_user.full_name)}!
+        This is {app.name}!
+        
+        This is an experimental project to make chatting with AI to feel like chatting with a real human.
+        Just send a message and see how it goes
+        Price, tokens. For now, bot is free (I added some credits). Use /set_model if the current model is out of budget
+        
+        Use /help to for more information or /list_commands to list all commands
+        """,
     )
 
 
@@ -26,11 +33,31 @@ async def help_handler(message: Message, app: App):
     """Basic help command handler"""
     await send_safe(
         message.chat.id,
-        f"This is {app.name}. Use /start to begin."
-        "Available commands:\n"
-        "/start - Start the bot\n"
-        "/help - Show this help message\n"
-        "/list_commands - Show Botspot commands list\n",
+        """
+        This is {app.name}!
+        
+        This is an experimental project to make chatting with AI to feel like chatting with a real human.
+        
+        Features:
+        - Split longer responses in separate messages
+        - Realistic pauses and typing between messages
+        - planned: Allow AI to contact you randomly throughout the day
+        - planned: Down-time, when AI is 'offline' - with responses later.
+        
+        Todo:
+        - message history (for now, only responds to last message)
+        
+        Price, tokens. For now, bot is free. 
+        - I've added small budgets for all vendors - OpenAI, Gemini, Claude and XAI
+        - the most budget is available for XAI
+        - be warned: that is because they explicitly use all prompts for model training
+        
+        You can select a model /set_model
+        
+        Some models support file attachment (notably, claude-3.7), so you can send images
+        
+        Use /list_commands to see all available commands
+        """,
     )
 
 
