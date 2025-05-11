@@ -3,6 +3,7 @@ from aiogram.filters import Command, CommandStart
 from aiogram.types import Message
 from botspot import commands_menu
 from botspot.utils import send_safe
+from textwrap import dedent
 
 from src.app import App
 
@@ -14,16 +15,17 @@ router = Router()
 async def start_handler(message: Message, app: App):
     await send_safe(
         message.chat.id,
-        f"""
+        dedent(
+            f"""
         Hey, {html.bold(message.from_user.full_name)}!
-        This is {app.name}!
         
-        This is an experimental project to make chatting with AI to feel like chatting with a real human.
+        This is {app.name}. An experimental project to make chatting with AI to feel like chatting with a real human.
         Just send a message and see how it goes
-        Price, tokens. For now, bot is free (I added some credits). Use /set_model if the current model is out of budget
         
+        Price, tokens. For now, bot is free (I added some credits). Use /set_model if the current model is out of budget
         Use /help to for more information or /list_commands to list all commands
-        """,
+        """
+        ),
     )
 
 
