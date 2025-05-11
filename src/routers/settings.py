@@ -108,8 +108,6 @@ async def set_model_handler(message: Message, app: App, state: FSMContext):
     # todo: save in mongodb instead
     await state.update_data(pinned_model_msg_id=sent_msg.message_id)
 
-    await send_safe(message.chat.id, f"Model set to {response} and pinned in chat")
-
 
 @commands_menu.botspot_command("set_splitter_mode", "Set the splitter mode")
 @router.message(Command("set_splitter_mode"))

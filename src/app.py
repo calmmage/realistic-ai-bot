@@ -7,12 +7,10 @@ from typing import Union
 from aiogram.types import Message
 from botspot.components.data.user_data import User
 from botspot.llm_provider import astream_llm
-from botspot.utils import answer_safe, reply_safe, typing_status
+from botspot.utils import answer_safe, reply_safe, typing_status, markdown_to_html
 from loguru import logger
 from pydantic_settings import BaseSettings
 from pydantic import SecretStr
-
-from src.utils import markdown_to_html
 
 # from dev.chat_coordinator_claude import ChatCoordinator
 

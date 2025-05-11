@@ -1,4 +1,4 @@
-from aiogram import Router, html
+from aiogram import Router, html, F
 from aiogram.filters import Command, CommandStart
 from aiogram.types import Message
 from botspot import commands_menu
@@ -34,9 +34,7 @@ async def help_handler(message: Message, app: App):
     )
 
 
-# @commands_menu.botspot_command("help", "Show this help message")
-# @router.message(Command("help"))
-@router.message()
+@router.message((F.text | F.caption) & F.chat.type == "private")
 async def chat_handler(message: Message, app: App):
     """Basic help command handler"""
     # await send_safe(message.chat.id, f"This is {app.name}. Use /start to begin.")
