@@ -25,8 +25,10 @@ class SplitterMode(Enum):
 
     NONE = "none"  # do not split
     SIMPLE = "simple"  # just split by \n\n
-    SIMPLE_IMPROVED = "simple_improved"  # same as simple, but add heuristics to re-join messages - not too short, not too long.
-    MARKDOWN = "markdown"  # split by markdown headers
+    # same as simple, but add heuristics to re-join messages - not too short, not too long.
+    SIMPLE_IMPROVED = "simple_improved"
+    # split by markdown headers
+    MARKDOWN = "markdown"
     STRUCTURED = "structured"  # explicitly request
     MULTI_QUERY = "multi_query"  # do multiple queries to llm - first generate a response, then split it into parts.
 
