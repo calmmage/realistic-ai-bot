@@ -1,91 +1,67 @@
-# Botspot Template
+# Realistic AI Bot
 
-A template for creating Telegram bots using [botspot](https://github.com/calmmage/botspot) - a framework built on top of aiogram that provides useful components and utilities.
+A chat experiment about making an AI feel less like a response box and more like a person on the
+other side. The original Telegram bot already split long answers and paused between them. This
+revival adds a local, playable slice of Petr's fuller vision: **timing, taste, changing interests,
+and initiative**.
 
-## Features
+## Play it now
 
-- 🚀 Quick setup with minimal boilerplate
-- 🛠 Built-in components for common bot features
-- 🔧 Easy configuration via environment variables
-- 📝 Command menu management out of the box
-- ⚡ Error handling and reporting
-- 🔍 Bot URL printing for easy testing
-
-## Quick Start
-
-1. Clone this template:
-```bash
-git clone https://github.com/calmmage/botspot-template.git your-bot-name
-cd your-bot-name
-```
-
-2. Install dependencies:
-```bash
-poetry install
-```
-
-3. Set up your environment:
-```bash
-cp example.env .env
-# Edit .env with your bot token and settings
-```
-
-4. Run the bot:
-```bash
-poetry run python run.py
-```
-
-## Project Structure
-
-```
-.
-├── app/
-│   ├── _app.py          # Core app
-│   ├── bot.py           # Bot setup & launcher
-│   ├── router.py          
-│   └── __init__.py
-├── example.env         # Example environment variables
-├── pyproject.toml      # Project dependencies
-├── README.md
-├── Dockerfile
-├── docker-compose.yaml
-└── run.py              # Main entry point - for docker etc.
-```
-
-## Configuration
-
-The template uses environment variables for configuration. See `example.env` for available options:
-
-- `TELEGRAM_BOT_TOKEN`: Your bot token from @BotFather
-- `BOTSPOT_PRINT_BOT_URL_ENABLED`: Print bot URL on startup
-- `BOTSPOT_ERROR_HANDLER_ENABLED`: Enable error handling
-- `BOTSPOT_BOT_COMMANDS_MENU_ENABLED`: Enable command menu
-- And more...
-
-## Development
-
-1. Install pre-commit hooks:
-```bash
-pre-commit install
-```
-
-2. Run tests:
-```bash
-poetry run pytest
-```
-
-## Docker Support
-
-Build and run with Docker:
+No bot token, API key, package install, or internet connection is needed:
 
 ```bash
-docker-compose up --build
+cd /Users/petrlavrov/work/projects/realistic-ai-bot
+python3 -m demo.server
 ```
 
-## License
+Then open [http://127.0.0.1:4173](http://127.0.0.1:4173).
 
-This project is licensed under the GNU General Public License v3.0 - see the [LICENSE](LICENSE) file for details.
+The two-minute path through the demo:
 
-## Contributing
+1. Click **baby keyboard + game** (or write your own message).
+2. Watch Mira think and answer in separate, timed bubbles.
+3. See which topics entered her interest set in **what stuck**.
+4. Click **skip ahead until she texts**. Her unsolicited message is chosen from those interests.
+5. Offer her a topic. She can accept or refuse it instead of becoming interested in everything.
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+The browser UI and behavior engine are dependency-free. They run entirely on localhost and do not
+send your text anywhere. The replies are a deliberately small local choreography engine, not a
+claim that a ruleset replaces an LLM; it makes the distinctive interaction testable before paying
+the integration cost.
+
+For a fast automated/browser run, add `?pace=fast` to the URL. Normal pace preserves the visible
+typing and thinking rhythm.
+
+## Vision represented by the slice
+
+The canonical vision note says the bot should:
+
+- write like a human;
+- respond in separate messages with delays and visible thinking;
+- start conversations randomly;
+- have character and preferences;
+- acquire, reject, and drop interests, then use them to decide what to bring up.
+
+The demo implements each as an inspectable interaction. Mira is one concrete character concept,
+not a claim that her exact personality was specified in the source note.
+
+## Test the slice
+
+```bash
+python3 -m unittest tests.test_demo -v
+```
+
+The focused suite covers character state, paced multi-message replies, interest acquisition and
+rejection, capacity-based dropping, proactive topic selection, and the HTTP/static-page boundary.
+
+## Existing Telegram implementation
+
+The 2025 bot remains under `src/`:
+
+- `src/app.py` — LLM call, response splitting, randomized delays;
+- `src/router.py` — Telegram commands and chat handler;
+- `src/bot.py` — aiogram/Botspot polling process;
+- `dev/chat_coordinator*` — earlier event-queue prototypes that were never wired into the bot.
+
+That path still needs Telegram and LLM credentials plus the floating Botspot/Calmlib dependencies.
+The local demo is intentionally a safe way to judge the product idea before reviving deployment.

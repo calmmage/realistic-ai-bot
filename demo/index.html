@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="A playable product slice of a characterful AI chat that has timing, taste, and changing interests."
+    />
+    <title>Mira — a realistic AI chat experiment</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='%23493d52'/%3E%3Ctext x='50' y='70' text-anchor='middle' font-size='64' fill='white' font-family='serif'%3Em%3C/text%3E%3C/svg%3E"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="ambient ambient-one" aria-hidden="true"></div>
+    <div class="ambient ambient-two" aria-hidden="true"></div>
+
+    <main class="shell">
+      <header class="masthead">
+        <a class="wordmark" href="/" aria-label="Mira demo home">
+          <span class="wordmark-dot"></span>
+          realistic chat / 01
+        </a>
+        <p>timing · taste · initiative</p>
+      </header>
+
+      <section class="workspace" aria-label="Realistic AI chat demo">
+        <aside class="identity-panel" aria-label="Mira's personality">
+          <div class="portrait" aria-hidden="true">
+            <span class="portrait-ring"></span>
+            <span class="portrait-core">m</span>
+          </div>
+
+          <div class="identity-copy">
+            <p class="eyebrow">the person on the other side</p>
+            <h1 id="profile-name">Mira</h1>
+            <p class="subtitle" id="profile-subtitle">curious night owl</p>
+            <p class="status-line">
+              <span></span
+              ><span id="profile-status">around, but not on command</span>
+            </p>
+          </div>
+
+          <div class="preference-card">
+            <p class="eyebrow">has a point of view</p>
+            <dl>
+              <div>
+                <dt>drawn to</dt>
+                <dd id="profile-likes">
+                  ambient sound, difficult questions, tiny handmade tools
+                </dd>
+              </div>
+              <div>
+                <dt>avoids</dt>
+                <dd id="profile-avoids">
+                  hustle talk, canned enthusiasm, pretending to know
+                </dd>
+              </div>
+            </dl>
+          </div>
+
+          <div
+            class="trait-list"
+            id="traits"
+            aria-label="Personality traits"
+          ></div>
+
+          <button class="quiet-button" id="reset-button" type="button">
+            reset this friendship
+          </button>
+        </aside>
+
+        <section class="chat-panel" aria-label="Conversation with Mira">
+          <header class="chat-header">
+            <div>
+              <p class="eyebrow">private conversation</p>
+              <h2>Mira</h2>
+            </div>
+            <button class="time-jump" id="time-jump" type="button">
+              <span aria-hidden="true">↝</span>
+              skip ahead until she texts
+            </button>
+          </header>
+
+          <div
+            class="conversation"
+            id="conversation"
+            role="log"
+            aria-live="polite"
+          >
+            <div class="day-marker"><span>tonight</span></div>
+            <article class="message message-bot intro-message">
+              <p>hey. i’m Mira.</p>
+              <time>now</time>
+            </article>
+            <article class="message message-bot intro-message">
+              <p>
+                tell me about something you cannot stop rearranging in your
+                head.
+              </p>
+              <time>now</time>
+            </article>
+          </div>
+
+          <div class="prompt-row" aria-label="Example messages">
+            <button
+              type="button"
+              data-prompt="I’m merging a baby keyboard with a strange little game and music generator."
+            >
+              baby keyboard + game
+            </button>
+            <button
+              type="button"
+              data-prompt="I keep wondering whether an AI can have genuine preferences."
+            >
+              AI with preferences
+            </button>
+            <button
+              type="button"
+              data-prompt="I found a book that changed how I think about memory."
+            >
+              a book + memory
+            </button>
+          </div>
+
+          <form class="composer" id="message-form">
+            <label class="sr-only" for="message-input">Message Mira</label>
+            <textarea
+              id="message-input"
+              rows="1"
+              maxlength="1200"
+              placeholder="write a few messages if you want…"
+              autocomplete="off"
+            ></textarea>
+            <button id="send-button" type="submit" aria-label="Send message">
+              <span>send</span><span aria-hidden="true">↑</span>
+            </button>
+          </form>
+          <p class="demo-note">
+            Local choreography demo — no API key, messages never leave this
+            machine.
+          </p>
+        </section>
+
+        <aside class="mind-panel" aria-label="Mira's changing mind">
+          <div class="mind-heading">
+            <div>
+              <p class="eyebrow">live inner state</p>
+              <h2>what stuck</h2>
+            </div>
+            <span class="turn-count" id="turn-count">0 turns</span>
+          </div>
+
+          <p class="mind-explainer">
+            Core tastes stay. New topics may be picked up, refused, or
+            eventually dropped.
+          </p>
+
+          <div class="interest-list" id="interest-list"></div>
+
+          <form class="offer-form" id="offer-form">
+            <label for="offer-input">offer her a topic</label>
+            <div>
+              <input
+                id="offer-input"
+                maxlength="40"
+                placeholder="e.g. brutalism"
+              />
+              <button id="offer-button" type="submit" aria-label="Offer topic">
+                +
+              </button>
+            </div>
+            <small>She may say no.</small>
+          </form>
+
+          <div class="activity">
+            <p class="eyebrow">why her mind changed</p>
+            <ol id="event-list"></ol>
+          </div>
+        </aside>
+      </section>
+
+      <footer class="demo-footer">
+        <p>
+          <strong>Try the whole idea in two minutes.</strong> Send one prompt,
+          watch it arrive in pieces, then skip ahead until Mira starts the next
+          conversation from what she learned.
+        </p>
+      </footer>
+    </main>
+
+    <template id="typing-template">
+      <div class="presence" data-testid="presence">
+        <span class="presence-label">Mira is typing</span>
+        <span class="typing-dots" aria-hidden="true"
+          ><i></i><i></i><i></i
+        ></span>
+      </div>
+    </template>
+
+    <script src="app.js" defer></script>
+  </body>
+</html>
