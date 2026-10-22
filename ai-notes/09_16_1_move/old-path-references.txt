@@ -1,0 +1,4 @@
+/Users/petrlavrov/calmmage/slow/home/code/bloat/data.json
+/Users/petrlavrov/calmmage/slow/realistic-ai-bot/ai-notes/09_16_1_move/move.md
+/Users/petrlavrov/calmmage/projects/ai-fun/AGENTS.md
+/Users/petrlavrov/calmmage/projects/ai-fun/CLAUDE.md
