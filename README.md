@@ -10,7 +10,7 @@ and initiative**.
 No bot token, API key, package install, or internet connection is needed:
 
 ```bash
-cd /Users/petrlavrov/calmmage/slow/realistic-ai-bot/code
+cd /Users/petrlavrov/calm/projects/p-realistic-ai-bot
 python3 -m demo.server
 ```
 
